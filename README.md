@@ -1,2 +1,12 @@
-# ism-discord-bot
-Test
+# ISM DISCORD BOT
+## Zmienne Środowiskowe 
+W pliku .env ustawiamy następujące zmienne środowiskowe: 
+
+DISCORD_TOKEN = SEKRET BOTA DISCORDOWEGO
+GUILD_ID = ID SERWERA DISCORD
+
+DB_HOST = IP/DOMENA BAZY DANYCH
+DB_PORT = PORT DEF. 3306
+DB_NAME = NAZWA BAZY DANYCH
+DB_USER = NAZWA UŻYTKOWNIKA
+DB_PASS = HASŁO UŻYTKOWNIKA
