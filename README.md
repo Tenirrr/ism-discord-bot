@@ -35,4 +35,4 @@ Dane są dostępne pod adresem:
 <ADRES WEB SERVERA>:<PORT WEB SERVERA>?data=<ROK>-<MIESIĄC>-<DZIEŃ>
 ```
 ## License
-[GPL 3.0](https://choosealicense.com/licenses/gpl-3.0//) - Bierzcie i jecie z tego wszyscy!
+[GPL 3.0](https://choosealicense.com/licenses/gpl-3.0//) - Bierzcie i jedzcie z tego wszyscy!
