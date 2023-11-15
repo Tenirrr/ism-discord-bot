@@ -11,6 +11,8 @@ Tworzymy plik o nazwie ```.env``` i ustawiamy w nim następujące zmienne środo
 DISCORD_TOKEN = SEKRET BOTA DISCORDOWEGO
 GUILD_ID = ID SERWERA DISCORD
 
+PORT = PORT NA KTÓRYM MA NASŁUCHIWAĆ WEB SERVER DEF. 3000
+
 DB_HOST = IP/DOMENA BAZY DANYCH
 DB_PORT = PORT DEF. 3306
 DB_NAME = NAZWA BAZY DANYCH
@@ -21,7 +23,7 @@ DB_PASS = HASŁO UŻYTKOWNIKA
 Aby uruchomić bota musimy użyć następujących komend:
 - Instalujemy wymagane paczki:
 ```sh
-npm install discord.js mysql2
+npm install discord.js express mysql2 moment
 ``` 
 - Uruchomienie bota:
 ```
