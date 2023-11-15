@@ -1,5 +1,5 @@
 # ISM Discord Bot
-Bot Discordowy którego zadaniem jest integracja z Leockim Instytutem Statystyk Międzynarodowych. UWAGA! Sam bot tylko zapisuje statystyki do bazy danych! Zaprezentowanie ich dla ISM zostawiam już w waszych rękach.
+Bot Discordowy którego zadaniem jest integracja z Leockim Instytutem Statystyk Międzynarodowych.
 ## Wymagania
 - Dostęp do bazy danych z uprawnieniami ```INSERT, SELECT, UPDATE, CREATE```.
 - Wersja node.js ```≥20.0.0``` lub instalacja ```dotenv```
