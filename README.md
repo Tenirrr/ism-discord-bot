@@ -29,5 +29,10 @@ npm install discord.js express mysql2 moment
 ```
 node --env-file .env ./app.js
 ```
+## Gdzie są dostępne dane?
+Dane są dostępne pod adressem: 
+```
+<ADRES WEB SERVERA>:<PORT WEB SERVERA>?data=<ROK>-<MIESIĄC>-<DZIEŃ>
+```
 ## License
 [GPL 3.0](https://choosealicense.com/licenses/gpl-3.0//) - Bierzcie i jecie z tego wszyscy!
