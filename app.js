@@ -1,68 +1,51 @@
-const { Client, GatewayIntentBits, Events } = require("discord.js");
-const mysql = require("mysql2");
+const { Client, GatewayIntentBits, Events } = require("discord.js")
+const express = require('express')
+const moment = require("moment")
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 10,
-    idleTimeout: 60000,
-    queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0,
-});
+const pool = require("./pool")
+require("./discord-bot")
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-    ]
-});
+const app = express()
+const port =  process.env.PORT || 3000
 
-client.on(Events.ClientReady, () => {
-    console.log("Connected to the server!");
-})
+app.get('/', async (req, res) => {
+    var responseJSON = {
+        status: "",
+        wynik: ""
+    }
 
-// Zapisywanie do bazy danych aktywności danych użytkowników
-client.on(Events.MessageCreate, async (message) => {
-    try {
-        const promisePool = pool.promise();
-        const date = new Date();
+    if (typeof req.query.data === "string") {
+        try {
+            const date = req.query.data
+            const dateParse = await moment(date)
 
-        const dateObj = {
-            day: date.getDate(),
-            month: date.getMonth() + 1,
-            year: date.getFullYear(),
-        }
+            const day = dateParse.date()
+            const month = dateParse.month() + 1
+            const year = dateParse.year()
 
-        if (message.author.globalName !== null && message.author.id !== null && message.author.bot === false && message.author.system === false && message.content.length > 0 && message.guildId === process.env.GUILD_ID) {
-            const [recordExist, fieldExist] = await promisePool.query("SELECT * FROM discord_activity WHERE discord_id = ? AND day = ? AND month = ? AND year = ?;", [message.author.id, dateObj.day, dateObj.month, dateObj.year]);
+            const promisePool = pool.promise()
+            const [rows, fields] = await promisePool.query("SELECT discord_id AS u, discord_username AS n, messages AS c FROM discord_activity WHERE day = ? AND month = ? AND year = ?;", [day, month, year])
 
-            if (recordExist.length === 0) {
-                await promisePool.query("INSERT INTO discord_activity (discord_id, discord_username, day, month, year) VALUES (?, ?, ?, ?, ?);", [message.author.id, message.author.globalName, dateObj.day, dateObj.month, dateObj.year]);
-                console.log(`No record for user: ${message.author.globalName} with ID: ${message.author.id} at ${dateObj.day}-${dateObj.month}-${dateObj.year}. CREATED!`);
+            responseJSON.status = "SUKCES"
+
+            if (rows.length > 0) {
+                responseJSON.wynik = rows
+            } else {
+                responseJSON.wynik = "BRAK_WYNIKOW_DLA_DNIA"
             }
 
-            await promisePool.query("UPDATE discord_activity SET messages = messages + 1, messages_length = messages_length + ? WHERE discord_id = ? AND day = ? AND month = ? AND year = ?", [message.content.length, message.author.id, dateObj.day, dateObj.month, dateObj.year]);
+            return res.json(responseJSON)
+        } catch (e) {
+            console.error(`Error: ${e}`)
+            responseJSON.wynik = "BLAD"
+            return res.json(responseJSON)
         }
-    } catch (e) {
-        console.error(`Error: ${e}`);
+    } else {
+        responseJSON.wynik = "BLAD"
+        return res.json(responseJSON)
     }
 })
 
-pool.query("CREATE TABLE IF NOT EXISTS `discord_activity` (`day` tinyint(3) UNSIGNED DEFAULT 0, `month` tinyint(3) UNSIGNED DEFAULT 0, `year` smallint(6) DEFAULT 0, `discord_id` bigint(20) UNSIGNED DEFAULT 0, `discord_username` varchar(32) DEFAULT 'anonymous', `messages` bigint(20) UNSIGNED DEFAULT 0, `messages_length` bigint(20) UNSIGNED DEFAULT 0) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;", (err, result) => {
-    if (err) {
-        console.error(`Error: ${err}`);
-    } else {
-        if (result.warningStatus === 0) {
-            console.log("The table was created because it did not exist.")
-        }
-        client.login(process.env.DISCORD_TOKEN);
-    }
-})
+app.listen(port, () => {
+    console.log('Web server started on port: ' + port)
+});

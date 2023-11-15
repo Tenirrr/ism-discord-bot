@@ -1,6 +1,6 @@
 {
   "name": "ism-discord-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Discord Bot for Integration with Leocki's Institute of International Statistics",
   "main": "app.js",
   "scripts": {},
@@ -9,6 +9,8 @@
   "license": "GPL-3.0",
   "dependencies": {
     "discord.js": "^14.14.1",
+    "express": "^4.18.2",
+    "moment": "^2.29.4",
     "mysql2": "^3.6.3"
   }
 }
