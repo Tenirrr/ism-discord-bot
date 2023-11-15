@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const mysql = require("mysql2");
-const {escapeId} = require("mysql2");
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
