@@ -30,7 +30,7 @@ npm install discord.js express mysql2 moment
 node --env-file .env ./app.js
 ```
 ## Gdzie są dostępne dane?
-Dane są dostępne pod adressem: 
+Dane są dostępne pod adresem: 
 ```
 <ADRES WEB SERVERA>:<PORT WEB SERVERA>?data=<ROK>-<MIESIĄC>-<DZIEŃ>
 ```
