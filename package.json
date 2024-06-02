@@ -3,7 +3,9 @@
   "version": "1.1.0",
   "description": "Discord Bot for Integration with Leocki's Institute of International Statistics",
   "main": "app.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node --env-file .env ./app.js"
+  },
   "keywords": [],
   "author": "Tenir",
   "license": "GPL-3.0",
