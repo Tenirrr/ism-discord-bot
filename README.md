@@ -23,10 +23,14 @@ DB_PASS = HASŁO UŻYTKOWNIKA
 Aby uruchomić bota musimy użyć następujących komend:
 - Instalujemy wymagane paczki:
 ```sh
-npm install discord.js express mysql2 moment
+npm install
 ``` 
 - Uruchomienie bota:
+```sh
+npm start
 ```
+LUB
+```sh
 node --env-file .env ./app.js
 ```
 ## Gdzie są dostępne dane?
